@@ -63,7 +63,7 @@
                                                class="form-control amount-input" id="amount" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="utility">Utilidad:</label>
+                                        
                                         <select name="utility" class="form-control" id="utility">
                                             <option value="0.0">0%</option>
                                             <option value="0.05">5%</option>
@@ -81,6 +81,17 @@
                                                 <option {{($p->selected) ? 'selected':'' }} value="{{$p->name}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
+                                        <br>
+                                        <label for="payment_frequency">Frecuencia de pago:</label>
+                 <select name="payment_frequency" class="form-control" id="payment_frequency">
+    <option value="0.0"></option>
+    <option value="0.05">Diario</option>
+    <option value="0.10">Semanal</option>
+    <option value="0.15">Quincenal</option>
+    <option value="0.20">Mensual</option>
+</select>
+
+
                                     </div>
                                     <div class="form-group text-center total-box hidden">
                                         <h4>Total + Utilidad</h4>

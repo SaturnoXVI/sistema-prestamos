@@ -636,12 +636,26 @@ function initMap({lat, lng}) {
 
 }(jQuery, window);
 
-+function ($, window) {
+(function ($, window) {
     function calc() {
         var amount = parseFloat($('.amount-input').val());
         var utility = parseFloat($('#utility').val());
+        var paymentFrequency = parseFloat($('#payment_frequency').val()); // Nuevo campo para la frecuencia de pago
+
+        // Calcula el total + utilidad de forma estándar
         var total = parseFloat(amount * utility) + parseFloat(amount);
-        var quote = parseFloat(total) / parseFloat($('#payment_number').val())
+
+        // Calcula la cuota en función de la frecuencia de pago
+        var quote = 0;
+        if (paymentFrequency === 0.05) { // Diario
+            quote = total / 30; // Suponiendo 30 días en un mes
+        } else if (paymentFrequency === 0.10) { // Semanal
+            quote = total / 4; // Suponiendo 4 semanas en un mes
+        } else if (paymentFrequency === 0.15) { // Quincenal
+            quote = total / 2; // Suponiendo 2 quincenas en un mes
+        } else if (paymentFrequency === 0.20) { // Mensual
+            quote = total;
+        }
 
         $('.total-box #total_show').html(total.toFixed(2));
         $('.total-box #quote').html(quote.toFixed(2));
@@ -661,6 +675,10 @@ function initMap({lat, lng}) {
     $('body').on('change', '#payment_number', function () {
         return calc();
     });
+    $('body').on('change', '#payment_frequency', function () { // Agregamos un evento para la frecuencia de pago
+        return calc();
+    });
+
     $(".datepicker-trigger").datepicker({
         "dateFormat": "dd/mm/yy"
     });
@@ -790,7 +808,8 @@ function initMap({lat, lng}) {
             })
     });
 
-}(jQuery, window);
+}(jQuery, window));
+
 
 //= public function for adding themes
 function addNewTheme(themeName) {
